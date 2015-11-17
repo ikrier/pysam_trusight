@@ -1,0 +1,3 @@
+These functions are similar to the other pysam functions.
+
+They've been slightly altered to deal with the different amplicon design from the Illumina Trusight Myeloid panel from new experiments.
