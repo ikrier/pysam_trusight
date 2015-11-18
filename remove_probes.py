@@ -97,8 +97,15 @@ for chr in set(seqnames):
                                 if min(abs_dists.values())<maxdist:
                                         ampliconID=min(abs_dists,key=abs_dists.get)
                                         clip_left(read,left_lengths[ampliconID]-dists[ampliconID])	#Same but based on the start
-		#print read
-		pairedreads.write(read)
+		#print read unless it's now empty of any alignment then we have to set it to unmapped :
+		if read.is_unmapped==False:
+			if len(read.cigar)==0 or 0 not in (item[0] for item in read.cigar):
+				read.is_unmapped=True
+				read.cigar=""
+				read.mapq=0 
+				read.is_secondary=False
+		if read.rlen>0:
+			pairedreads.write(read)
 
 pairedreads.close()
 samfile.close()
