@@ -64,6 +64,10 @@ java -jar -Xmx4g -Djava.io.tmpdir=tmp /data/software/GenomeAnalysisTK.jar -T Ind
 java -jar -Xmx4g /data/software/picard/dist/picard.jar FixMateInformation I=$3"_realigned_cutends.bam" O=$3"_realigned_cutends.srt.bam" SORT_ORDER=coordinate ADD_MATE_CIGAR=true TMP_DIR=`pwd`/tmp &>>$3.out
 samtools index $3"_realigned_cutends.srt.bam"
 
+#We mark the duplicates and create another file :
+java -jar /data/software/picard/dist/picard.jar MarkDuplicates I=$3"_realigned_cutends.srt.bam" O=$3"_realigned_cutends.srt.dups.bam" M=$3"_realigned_cutends.srt.bam.metrics" &>>$3.out
+samtools index $3"_realigned_cutends.srt.dups.bam"
+
 # We DON'T create the recalibration data
 #java -Xmx4g -jar /data/software/GenomeAnalysisTK.jar    -T BaseRecalibrator    -R /data/genomes/Broadhs37/hs37d5.fa   -I $3"_realigned_cutends.srt.bam" -knownSites /data/test_gatk/bundle/1000G_phase1.indels.b37.vcf -knownSites /data/test_gatk/bundle/Mills_and_1000G_gold_standard.indels.b37.vcf  -knownSites /data/test_gatk/bundle/dbsnp_138.b37.vcf -o $3"_recalibration_report.grp" &>>$3.out
 
