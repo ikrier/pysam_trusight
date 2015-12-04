@@ -107,6 +107,17 @@ for chr in set(seqnames):
 		if read.rlen>0:
 			pairedreads.write(read)
 
+#Let's add something to retain the rest of the reads :
+samfile.close()
+samfile = pysam.AlignmentFile(myargs["Alignments bam"][0], "rb")
+
+for read in samfile.fetch(until_eof=True):
+	if read.tid==-1:
+		pairedreads.write(read)
+	elif "chr"+samfile.getrname(read.tid) not in set(seqnames):
+		pairedreads.write(read)
+
+
 pairedreads.close()
 samfile.close()
 
