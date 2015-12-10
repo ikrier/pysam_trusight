@@ -42,7 +42,7 @@ bedfile=/data/TruSight_analysis/trusight-myeloid-amplicon-track.bed
 
 samtools mpileup -f /data/genomes/Broadhs37/hs37d5.fa  -l $bedfile $1 >$2".mpileup"
 
-java  -Xmx4g -jar -Djava.io.tmpdir=tmp /data/software/VarScan.v2.3.9.jar mpileup2snp $2".mpileup" --min-coverage 100 --min-var-freq 0.05 --min-avg-qual 20 --p-value 0.1 --output-vcf >Varscan_$2".vcf"
+java  -Xmx4g -jar -Djava.io.tmpdir=tmp /data/software/VarScan.v2.3.9.jar mpileup2snp $2".mpileup" --min-coverage 100 --min-var-freq 0.05 --min-avg-qual 20 --p-value 0.1 --output-vcf >Varscan_$2".vcf"  --strand-filter 0 --min-strand 0
 
 bgzip Varscan_$2".vcf"
 tabix Varscan_$2".vcf.gz"
