@@ -37,7 +37,7 @@ fi
       
 echo "Running varscan indel calling on" $1".mpileup" " "to create Varscan_indels_$1".vcf.gz"
 
-java  -Xmx4g -jar -Djava.io.tmpdir=tmp /data/software/VarScan.v2.3.9.jar mpileup2indel $1".mpileup" --min-coverage 100 --min-var-freq 0.05 --min-avg-qual 20 --p-value 0.1 --output-vcf 1 >Varscan_indels_$1".vcf"
+java  -Xmx4g -jar -Djava.io.tmpdir=tmp /data/software/VarScan.v2.3.9.jar mpileup2indel $1".mpileup" --min-coverage 100 --min-var-freq 0.05 --min-avg-qual 20 --p-value 0.1 --output-vcf 1 >Varscan_indels_$1".vcf" --min-strands2 0 ----strand-filter 0
 
 bgzip Varscan_indels_$1".vcf"
 tabix Varscan_indels_$1".vcf.gz"
